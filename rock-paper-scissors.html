@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rock Paper Scissors</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f1f1f1;
+    }
+    #gameContainer {
+        text-align: center;
+        animation: fadeIn 1s ease;
+    }
+    #result {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    #choices {
+        display: flex;
+        justify-content: center;
+    }
+    .choice {
+        margin: 0 10px;
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        transition: transform 0.3s ease;
+    }
+    .choice:hover {
+        transform: scale(1.1);
+    }
+    #playerHand, #computerHand {
+        width: 150px;
+        height: 150px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        animation-duration: 0.5s;
+    }
+    #playerHand {
+        animation-name: playerAnim;
+    }
+    #computerHand {
+        animation-name: computerAnim;
+    }
+    @keyframes playerAnim {
+        0% { transform: rotate(90deg); }
+        100% { transform: rotate(0deg); }
+    }
+    @keyframes computerAnim {
+        0% { transform: rotate(-90deg); }
+        100% { transform: rotate(0deg); }
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div id="gameContainer">
+    <div id="result">Choose your move:</div>
+    <div id="choices">
+        <button class="choice" onclick="play('rock')"><img src="https://emojicdn.elk.sh/👊" alt="Rock" width="50"></button>
+        <button class="choice" onclick="play('paper')"><img src="https://emojicdn.elk.sh/✋" alt="Paper" width="50"></button>
+        <button class="choice" onclick="play('scissors')"><img src="https://emojicdn.elk.sh/✌" alt="Scissors" width="50"></button>
+    </div>
+    <div id="playerHand"></div>
+    <div id="computerHand"></div>
+</div>
+
+<script>
+    function play(playerChoice) {
+        var choices = ["rock", "paper", "scissors"];
+        var computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+        document.getElementById("playerHand").style.backgroundImage = "url('https://emojicdn.elk.sh/" + getEmoji(playerChoice) + "')";
+        document.getElementById("computerHand").style.backgroundImage = "url('https://emojicdn.elk.sh/" + getEmoji(computerChoice) + "')";
+
+        var result;
+        if (playerChoice === computerChoice) {
+            result = "It's a tie!";
+        } else if ((playerChoice === "rock" && computerChoice === "scissors") ||
+                   (playerChoice === "paper" && computerChoice === "rock") ||
+                   (playerChoice === "scissors" && computerChoice === "paper")) {
+            result = "You win!";
+        } else {
+            result = "Computer wins!";
+        }
+
+        document.getElementById("result").innerText = "You chose " + playerChoice + ". Computer chose " + computerChoice + ". " + result;
+    }
+
+    function getEmoji(choice) {
+        if (choice === "rock") {
+            return "%F0%9F%91%8A";
+        } else if (choice === "paper") {
+            return "%F0%9F%98%8B";
+        } else if (choice === "scissors") {
+            return "%F0%9F%91%8C";
+        }
+    }
+</script>
+
+</body>
+</html>
